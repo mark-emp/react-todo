@@ -22,6 +22,22 @@ export var addTodos = (todos) => {
   };
 }
 
+export var startAddTodos = () => {
+  return (dispatch, getState) => {
+    var todosRef = firebaseRef.child('todos');
+    return todosRef.once('value').then((snapshot) => {
+      var todos = snapshot.val() || {};
+      var parsedTodos = [];
+      Object.keys(todos).forEach((todoID) => {
+        parsedTodos.push({
+          id: todoID,
+          ...todos[todoID]
+        });
+      });
+      dispatch(addTodos(parsedTodos));
+    }, (e) => console.log('Read failed' + e))};
+}
+
 export var startAddTodo = (text) => {
   return (dispatch, getState) => {
     var todo = {
