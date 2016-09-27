@@ -80,7 +80,7 @@ describe('Actions', () => {
       type: 'LOGIN',
       uid: 'abc123'
     };
-    var res = actions.login('abc123');
+    var res = actions.login(action.uid);
     expect(res).toEqual(action);
   });
   it('should generate logout action', () => {
